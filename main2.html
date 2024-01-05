@@ -34,7 +34,7 @@
                         let movieoverview = a['overview'];
                         let movievote = a['vote_average'];
                         let imageUrl = `https://image.tmdb.org/t/p/w500${apiimage}`;
-                        let movievotefix = movievote.toFixed(1);
+                        let movievotefix = movievote.toFixed(2);
 
                         let temp_html = `
                             <div class="col" onclick="clickid('${movietitle}', ${movieId})">
@@ -83,7 +83,7 @@
                         let movieoverview = movie['overview'];
                         let movievote = movie['vote_average'];
                         let imageUrl = `https://image.tmdb.org/t/p/w500${apiimage}`;
-                        let movievotefix = movievote.toFixed(1);
+                        let movievotefix = movievote.toFixed(2);
 
                         return `
                     <div class="col clickable-card" onclick="clickid('${movietitle}', ${movieId})">
