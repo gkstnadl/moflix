@@ -15,6 +15,14 @@ body {
     border: none !important;
 }
 
+.btn {
+    background-color: #bc0e32;
+}
+
+.btn:hover {
+    background-color: #a70c2c;
+}
+
 .sitetitle {
     height: 250px;
     color: white;
