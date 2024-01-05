@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700&display=swap');
+
+* {
+    font-family: 'Noto sans KR', sans-serif;
+    margin: 0;
+}
+
+body {
+    background-color: #050505;
+}
+
+.form-control, .btn {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.sitetitle {
+    height: 250px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sitetitle>header {
+    text-align: center;
+    margin: 40px auto 40px auto;
+}
+
+.maintitle {
+    font-size: 48px;
+    color: #bc0e32;
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+.input-group {
+    width: 600px;
+    display: flex;
+}
+
+.mycards {
+    width: 1080px;
+    margin: 30px auto 0px auto;
+
+}
+
+.col {
+    cursor: pointer;
+}
+
+.card {
+    background-color: #151515;
+}
+
+.col:hover {
+    opacity: 80%;
+}
+
+.card-body {
+    background-color: #151515;
+}
+
+.card-title {
+    color: white;
+}
+
+.card-text {
+    color: white;
+    font-weight: 300;
+}
+
+.text-body-secondary {
+    color: white;
+}
+
+

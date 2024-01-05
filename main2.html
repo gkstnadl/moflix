@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moflix</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YjQxYzU1NzkxYjg5ZGVhNGY4NWFkN2FiNzZiNjQyNiIsInN1YiI6IjY1OTc3ZjhjZWY5ZDcyMzdmMzEyYjZmYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WNj_AnHQeoSnrAc8qZtz8_iwyIYS7G0ystXjjfOPims'
+            }
+        };
+
+        function api1() {
+            let url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
+            let namesContainer = document.getElementById('moviecard');
+
+            namesContainer.innerHTML = '';
+
+            fetch(url, options)
+                .then(response => response.json())
+                .then(data => {
+                    let rows = data['results'];
+                    rows.forEach(a => {
+                        let movieId = a['id'];
+                        let apiimage = a['poster_path'];
+                        let movietitle = a['original_title'];
+                        let movieoverview = a['overview'];
+                        let movievote = a['vote_average'];
+                        let imageUrl = `https://image.tmdb.org/t/p/w500${apiimage}`;
+                        let movievotefix = movievote.toFixed(1);
+
+                        let temp_html = `
+                            <div class="col" onclick="clickid('${movietitle}', ${movieId})">
+                                <div class="card h-100">
+                                    <img src="${imageUrl}" class="card-img-top" alt="${movietitle}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${movietitle}</h5>
+                                        <p class="card-text">${movieoverview}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-body-secondary">⭐ ${movievotefix}</small>
+                                    </div>
+                                </div>
+                            </div>`;
+
+
+                        namesContainer.innerHTML += temp_html;
+                    });
+                })
+                .catch(error => {
+                    console.error('데이터를 가져오는 중 에러 발생:', error);
+                });
+        }
+
+
+        function clickid(movietitle, movieId) {
+            alert(`${movietitle}의 ID는 ${movieId}입니다.`);
+        }
+
+
+        function searchMovies() {
+            let searchInput = document.getElementById('floatingInput').value;
+            let url = `https://api.themoviedb.org/3/search/movie?query=${searchInput}&language=en-US&page=1&include_adult=false`;
+            let namesContainer = document.getElementById('moviecard');
+            namesContainer.innerHTML = '';
+
+            fetch(url, options)
+                .then(response => response.json())
+                .then(data => {
+                    let movies = data['results'];
+
+                    let htmlContent = movies.map(movie => {
+                        let movieId = movie['id'];
+                        let apiimage = movie['poster_path'];
+                        let movietitle = movie['original_title'];
+                        let movieoverview = movie['overview'];
+                        let movievote = movie['vote_average'];
+                        let imageUrl = `https://image.tmdb.org/t/p/w500${apiimage}`;
+                        let movievotefix = movievote.toFixed(1);
+
+                        return `
+                    <div class="col clickable-card" onclick="clickid('${movietitle}', ${movieId})">
+                        <div class="card h-100">
+                            <img src="${imageUrl}" class="card-img-top" alt="${movietitle}">
+                            <div class="card-body">
+                                <h5 class="card-title">${movietitle}</h5>
+                                <p class="card-text">${movieoverview}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-body-secondary">⭐ ${movievotefix}</small>
+                            </div>
+                        </div>
+                    </div>`;
+                    }).join('');
+
+                    namesContainer.innerHTML = htmlContent;
+                })
+                .catch(error => {
+                    console.error('데이터를 가져오는 중 에러 발생:', error);
+                });
+        }
+
+
+
+    </script>
+
+
+</head>
+
+<body>
+    <div class="sitetitle">
+        <header>
+            <h1 class="maintitle">Moflix</h1>
+            <h2 class="subtitle">내배캠 최고 평점 영화 콜렉션</h2>
+        </header>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
+                    </path>
+                </svg>
+            </span>
+            <input type="text" class="form-control" id="floatingInput" placeholder="영화 제목을 검색해보세요.">
+            <button type="button" class="btn btn-secondary" onclick="searchMovies()">검색</button>
+        </div>
+    </div>
+
+    <div class="mycards">
+        <div id="moviecard" class="row row-cols-1 row-cols-md-3 g-4">
+            <script>
+                api1();
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    document.getElementById('floatingInput').focus();
+                });
+
+                document.getElementById('floatingInput').addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        searchMovies();
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
+</body>
+
+</html>
