@@ -17,9 +17,9 @@
             }
         };
 
-        function api1() {
-            let url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
-            let namesContainer = document.getElementById('moviecard');
+        function apiImport() {
+            const url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
+            const namesContainer = document.getElementById('movieCard');
 
             namesContainer.innerHTML = '';
 
@@ -27,25 +27,27 @@
                 .then(response => response.json())
                 .then(data => {
                     let rows = data['results'];
-                    rows.forEach(a => {
-                        let movieId = a['id'];
-                        let apiimage = a['poster_path'];
-                        let movietitle = a['original_title'];
-                        let movieoverview = a['overview'];
-                        let movievote = a['vote_average'];
-                        let imageUrl = `https://image.tmdb.org/t/p/w500${apiimage}`;
-                        let movievotefix = movievote.toFixed(2);
+                    rows.forEach(row => {
+                        let movieId = row['id'];
+                        let apiImage = row['poster_path'];
+                        let movieTitle = row['original_title'];
+                        let movieOverview = row['overview'];
+                        let movieVote = row['vote_average'];
+                        let imageUrl = `https://image.tmdb.org/t/p/w500${apiImage}`;
+                        let movieVoteFix = movieVote.toFixed(2);
+
+                        
 
                         let temp_html = `
-                            <div class="col" onclick="clickid('${movietitle}', ${movieId})">
+                            <div class="col" onclick="clickid('${movieTitle}', ${movieId})">
                                 <div class="card h-100">
-                                    <img src="${imageUrl}" class="card-img-top" alt="${movietitle}">
+                                    <img src="${imageUrl}" class="card-img-top" alt="${movieTitle}">
                                     <div class="card-body">
-                                        <h5 class="card-title">${movietitle}</h5>
-                                        <p class="card-text">${movieoverview}</p>
+                                        <h5 class="card-title">${movieTitle}</h5>
+                                        <p class="card-text">${movieOverview}</p>
                                     </div>
                                     <div class="card-footer">
-                                        <small class="text-body-secondary">⭐ ${movievotefix}</small>
+                                        <small class="text-body-secondary">⭐ ${movieVoteFix}</small>
                                     </div>
                                 </div>
                             </div>`;
@@ -60,15 +62,15 @@
         }
 
 
-        function clickid(movietitle, movieId) {
-            alert(`${movietitle}의 ID는 ${movieId}입니다.`);
+        function clickid(movieTitle, movieId) {
+            alert(`${movieTitle}의 ID는 ${movieId}입니다.`);
         }
 
 
         function searchMovies() {
-            let searchInput = document.getElementById('floatingInput').value;
-            let url = `https://api.themoviedb.org/3/search/movie?query=${searchInput}&language=en-US&page=1&include_adult=false`;
-            let namesContainer = document.getElementById('moviecard');
+            const searchInput = document.getElementById('floatingInput').value;
+            const url = `https://api.themoviedb.org/3/search/movie?query=${searchInput}&language=en-US&page=1&include_adult=false`;
+            const namesContainer = document.getElementById('movieCard');
             namesContainer.innerHTML = '';
 
             fetch(url, options)
@@ -78,23 +80,23 @@
 
                     let htmlContent = movies.map(movie => {
                         let movieId = movie['id'];
-                        let apiimage = movie['poster_path'];
-                        let movietitle = movie['original_title'];
-                        let movieoverview = movie['overview'];
-                        let movievote = movie['vote_average'];
-                        let imageUrl = `https://image.tmdb.org/t/p/w500${apiimage}`;
-                        let movievotefix = movievote.toFixed(2);
+                        let apiImage = movie['poster_path'];
+                        let movieTitle = movie['original_title'];
+                        let movieOverview = movie['overview'];
+                        let movieVote = movie['vote_average'];
+                        let imageUrl = `https://image.tmdb.org/t/p/w500${apiImage}`;
+                        let movieVoteFix = movieVote.toFixed(2);
 
                         return `
-                    <div class="col clickable-card" onclick="clickid('${movietitle}', ${movieId})">
+                    <div class="col clickable-card" onclick="clickid('${movieTitle}', ${movieId})">
                         <div class="card h-100">
-                            <img src="${imageUrl}" class="card-img-top" alt="${movietitle}">
+                            <img src="${imageUrl}" class="card-img-top" alt="${movieTitle}">
                             <div class="card-body">
-                                <h5 class="card-title">${movietitle}</h5>
-                                <p class="card-text">${movieoverview}</p>
+                                <h5 class="card-title">${movieTitle}</h5>
+                                <p class="card-text">${movieOverview}</p>
                             </div>
                             <div class="card-footer">
-                                <small class="text-body-secondary">⭐ ${movievotefix}</small>
+                                <small class="text-body-secondary">⭐ ${movieVoteFix}</small>
                             </div>
                         </div>
                     </div>`;
@@ -135,9 +137,9 @@
     </div>
 
     <div class="mycards">
-        <div id="moviecard" class="row row-cols-1 row-cols-md-3 g-4">
+        <div id="movieCard" class="row row-cols-1 row-cols-md-3 g-4">
             <script>
-                api1();
+                apiImport();
 
                 document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('floatingInput').focus();
