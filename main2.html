@@ -36,8 +36,6 @@
                         let imageUrl = `https://image.tmdb.org/t/p/w500${apiImage}`;
                         let movieVoteFix = movieVote.toFixed(2);
 
-                        
-
                         let temp_html = `
                             <div class="col" onclick="clickid('${movieTitle}', ${movieId})">
                                 <div class="card h-100">
@@ -122,18 +120,20 @@
             <h1 class="maintitle">Moflix</h1>
             <h2 class="subtitle">내배캠 최고 평점 영화 콜렉션</h2>
         </header>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
-                    </path>
-                </svg>
-            </span>
-            <input type="text" class="form-control" id="floatingInput" placeholder="영화 제목을 검색해보세요.">
-            <button type="button" class="btn btn-secondary" onclick="searchMovies()">검색</button>
-        </div>
+        <form id="searchForm">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
+                        </path>
+                    </svg>
+                </span>
+                <input type="text" class="form-control" id="floatingInput" placeholder="영화 제목을 검색해보세요.">
+                <button type="button" class="btn btn-secondary" onclick="searchMovies()">검색</button>
+            </div>
+        </form>
     </div>
 
     <div class="mycards">
@@ -145,10 +145,9 @@
                     document.getElementById('floatingInput').focus();
                 });
 
-                document.getElementById('floatingInput').addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter') {
-                        searchMovies();
-                    }
+                document.getElementById('searchForm').addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    searchMovies();
                 });
             </script>
         </div>
