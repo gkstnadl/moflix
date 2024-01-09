@@ -6,10 +6,11 @@ const options = {
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YjQxYzU1NzkxYjg5ZGVhNGY4NWFkN2FiNzZiNjQyNiIsInN1YiI6IjY1OTc3ZjhjZWY5ZDcyMzdmMzEyYjZmYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WNj_AnHQeoSnrAc8qZtz8_iwyIYS7G0ystXjjfOPims'
     }
 };
+
 function createMovieCard(movie) {
     const { id, poster_path, original_title, overview, vote_average } = movie;
     const imageUrl = `https://image.tmdb.org/t/p/w500${poster_path}`;
-    const movieVoteFix = vote_average.toFixed(2);
+    const movieVoteFix = vote_average.toFixed(2); //평점 소수점 2자리로 고정. 보기편하게
 
     return `
         <div class="col clickable-card" onclick="clickid('${original_title}', ${id})">
@@ -66,10 +67,12 @@ function searchMovies() {
 
 apiImport();
 
+// 검색창에 커서 자동으로 가게 하는 기능
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('floatingInput').focus();
 });
 
+// 검색 기능 구현.
 document.getElementById('searchForm').addEventListener('submit', function (e) {
     e.preventDefault();
     searchMovies();
