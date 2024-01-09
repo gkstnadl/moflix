@@ -10,7 +10,7 @@ const options = {
 function createMovieCard(movie) {
     const { id, poster_path, original_title, overview, vote_average } = movie;
     const imageUrl = `https://image.tmdb.org/t/p/w500${poster_path}`;
-    const movieVoteFix = vote_average.toFixed(2); //평점 소수점 2자리로 고정. 보기편하게
+    const movieVoteFix = vote_average.toFixed(2); // 평점 소수점 2자리로 고정. 보기편하게
 
     return `
         <div class="col clickable-card" onclick="clickid('${original_title}', ${id})">
@@ -29,8 +29,14 @@ function createMovieCard(movie) {
 
 function displayMovies(movies) {
     const namesContainer = document.getElementById('movieCard');
-    namesContainer.innerHTML = movies.map(createMovieCard).join('');
+    namesContainer.innerHTML = ''; 
+
+    movies.forEach(movie => {
+        const movieCardHTML = createMovieCard(movie);
+        namesContainer.innerHTML += movieCardHTML;
+    });
 }
+
 
 function apiImport() {
     const url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
